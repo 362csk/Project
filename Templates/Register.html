@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Register — Create Account</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+
+  <body>
+    <main class="container" id="app">
+      <section class="panel form-panel" aria-labelledby="register-heading">
+        <!-- logo (using uploaded local file path) -->
+        <div style="text-align:center;margin-bottom:12px;">
+          <img src="/mnt/data/99e2575d-7697-4077-8052-1e92e0e98f85.png" alt="logo" style="height:64px; border-radius:8px;">
+        </div>
+
+        <h1 id="register-heading">Create Account</h1>
+        <p class="lead">Sign up to get access to your dashboard</p>
+
+        <form id="register-form" novalidate>
+          <label for="name">Full name</label>
+          <input id="name" name="name" type="text" placeholder="Your full name" required />
+
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com" required />
+
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" placeholder="Choose a password" required minlength="6" />
+
+          <button type="submit" class="btn primary">Register</button>
+
+          <p class="muted" style="margin-top:12px;">
+            Already registered? <a href="practice.html">Sign in</a>
+          </p>
+
+          <div id="error" role="alert" class="error" aria-live="polite"></div>
+          <div id="success" role="status" class="muted" style="margin-top:8px;"></div>
+        </form>
+      </section>
+    </main>
+
+    <script src="/static/register.js"></script>
+  </body>
+</html>
