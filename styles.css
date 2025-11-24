@@ -1,0 +1,40 @@
+:root{
+  --bg:#f5f7fb;
+  --card:#ffffff;
+  --muted:#6b7280;
+  --primary:#2563eb;
+  --accent:#06b6d4;
+  --danger:#ef4444;
+}
+*{box-sizing:border-box}
+body{font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);margin:0;color:#0f172a}
+.container{max-width:980px;margin:48px auto;display:grid;grid-template-columns:1fr 420px;gap:24px;padding:20px}
+.panel{background:var(--card);padding:28px;border-radius:12px;box-shadow:0 6px 18px rgba(15,23,42,0.06)}
+.form-panel{min-height:360px}
+h1{margin:0 0 8px;font-size:1.6rem}
+.lead{margin:0 0 18px;color:var(--muted)}
+label{display:block;margin-top:12px;font-weight:600}
+input[type="email"],input[type="password"]{width:100%;padding:10px 12px;margin-top:6px;border:1px solid #e6e9ef;border-radius:8px;font-size:14px}
+.row.small{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+.checkbox{display:flex;align-items:center;gap:8px;font-weight:500}
+.forgot{color:var(--muted);text-decoration:none;font-size:13px}
+.btn{display:inline-block;padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:700}
+.btn.primary{background:linear-gradient(90deg,var(--primary),#1d4ed8);color:#fff;width:100%;margin-top:18px}
+.btn.alt{background:transparent;border:1px solid #e6e9ef;padding:8px 12px;border-radius:8px}
+.or{color:var(--muted);font-size:13px;margin:14px 0;text-align:center}
+.socials{display:flex;gap:8px}
+.muted{color:var(--muted);font-size:13px;margin-top:14px}
+.error{color:var(--danger);margin-top:12px;min-height:20px}
+.dash-panel header{display:flex;justify-content:space-between;align-items:center}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.card{background:linear-gradient(180deg,#fff,#fbfdff);padding:16px;border-radius:10px;border:1px solid #eef2ff}
+.btn.link{background:transparent;color:var(--primary);font-weight:600}
+
+@media (max-width:920px){
+  .container{grid-template-columns:1fr;max-width:720px}
+  .dash-panel{order:2}
+}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+.btn:focus,input:focus{outline:3px solid rgba(37,99,235,0.15);outline-offset:2px}
