@@ -1,66 +1,41 @@
-// Minimal client-side logic for the demo Login Dashboard
-document.addEventListener('DOMContentLoaded', ()=>{
-  const loginForm = document.getElementById('login-form');
-  const errorEl = document.getElementById('error');
-  const dashboard = document.getElementById('dashboard');
-  const app = document.getElementById('app');
-  const greeting = document.getElementById('greeting');
-  const userEmail = document.getElementById('user-email');
-  const signout = document.getElementById('signout');
+document.getElementById("login-form").addEventListener("submit", async function (e) {
+  e.preventDefault();
 
-  const MOCK_EMAIL = 'user@example.com';
-  const MOCK_PW = 'password';
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const errorBox = document.getElementById("error");
 
-  function showError(msg){ errorEl.textContent = msg }
-  function clearError(){ errorEl.textContent = '' }
+  // Clear error
+  errorBox.textContent = "";
 
-  function showDashboard(user){
-    document.querySelector('.form-panel').hidden = true;
-    dashboard.hidden = false;
-    greeting.textContent = `Hello, ${user.name || 'User'}`;
-    userEmail.textContent = user.email || '—';
-  }
+  try {
+    const response = await fetch("http://127.0.0.1:5000/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email, password: password })
+    });
 
-  function hideDashboard(){
-    document.querySelector('.form-panel').hidden = false;
-    dashboard.hidden = true;
-  }
+    const data = await response.json();
 
-  // Check already logged-in
-  const stored = localStorage.getItem('mockAuth');
-  if(stored){
-    try{
-      const user = JSON.parse(stored);
-      showDashboard(user);
-    }catch(e){ localStorage.removeItem('mockAuth') }
-  }
+    if (data.status === "success") {
+      // Hide login form, show dashboard
+      document.querySelector(".form-panel").hidden = true;
+      document.getElementById("dashboard").hidden = false;
 
-  loginForm.addEventListener('submit', (ev)=>{
-    ev.preventDefault();
-    clearError();
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value;
+      document.getElementById("greeting").textContent = "Hello, " + data.user.name;
+      document.getElementById("user-email").textContent = data.user.email;
 
-    if(!email || !password){ showError('Please enter email and password.'); return }
-    if(password.length < 6){ showError('Password must be at least 6 characters.'); return }
-
-    // Mock auth: accept fixed credentials
-    if(email.toLowerCase() === MOCK_EMAIL && password === MOCK_PW){
-      const user = { email: MOCK_EMAIL, name: 'Demo User' };
-      localStorage.setItem('mockAuth', JSON.stringify(user));
-      showDashboard(user);
-    }else{
-      showError('Invalid email or password.');
+    } else {
+      errorBox.textContent = data.message;
     }
-  });
 
-  signout.addEventListener('click', ()=>{
-    localStorage.removeItem('mockAuth');
-    hideDashboard();
-    document.getElementById('login-form').reset();
-  });
+  } catch (error) {
+    errorBox.textContent = "Server error. Backend not running.";
+  }
+});
 
-  // Social buttons behave as placeholders
-  document.getElementById('github').addEventListener('click', ()=> alert('Social login is a demo placeholder.'))
-  document.getElementById('google').addEventListener('click', ()=> alert('Social login is a demo placeholder.'))
+// LOGOUT
+document.getElementById("signout").addEventListener("click", () => {
+  document.getElementById("dashboard").hidden = true;
+  document.querySelector(".form-panel").hidden = false;
 });
